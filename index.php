@@ -3,33 +3,32 @@
  * Created by PhpStorm.
  * User: aurelienschiltz
  * Date: 18/03/2016
- * Time: 18:28
+ * Time: 18:28.
  */
- 
+
  /* READ THE FILE "test" IN THE ROOT FOLDER AND PARSE IT TO READ EVERY ACCOUNTS */
 
 
-require "classes/includes.php";
+require 'classes/includes.php';
 set_time_limit(60);
 ini_set('memory_limit', '1000M');
-$accounts = file_get_contents("test");
+$accounts = file_get_contents('test');
 
 $already = new AlreadyExist();
 
 $accounts = explode(PHP_EOL, $accounts);
 foreach ($accounts as $account) {
-    $theacc = explode(":", $account);
+    $theacc = explode(':', $account);
 
     try {
         $amazon = new AmazonUS($theacc[0], $theacc[1]);
-        if (!$amazon->connect())
-            echo 'Non-working account US: ' . $theacc[0] . '<br />';
-        else {
+        if (!$amazon->connect()) {
+            echo 'Non-working account US: '.$theacc[0].'<br />';
+        } else {
             $amazon->parseAccount();
             $amazon->displayAccount();
         }
         unset($amazon);
-
     } catch (Exception $e) {
         unset($amazon);
         echo 'Already present in US : '.$theacc[0].'<br />';
@@ -37,9 +36,9 @@ foreach ($accounts as $account) {
 
     try {
         $amazon = new AmazonUK($theacc[0], $theacc[1]);
-        if (!$amazon->connect())
-            echo 'Non-working account UK: ' . $theacc[0] . '<br />';
-        else {
+        if (!$amazon->connect()) {
+            echo 'Non-working account UK: '.$theacc[0].'<br />';
+        } else {
             $amazon->parseAccount();
             $amazon->displayAccount();
         }
